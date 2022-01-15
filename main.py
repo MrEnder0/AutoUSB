@@ -4,5 +4,6 @@ from logger import *
 import time
 
 DriveLetter = fileCheck()
+interpret(DriveLetter)
 
-time.sleep(10)
+time.sleep(5)
