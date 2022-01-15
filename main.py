@@ -5,5 +5,3 @@ import time
 
 DriveLetter = fileCheck()
 interpret(DriveLetter)
-
-time.sleep(5)
