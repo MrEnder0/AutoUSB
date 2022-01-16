@@ -8,10 +8,10 @@ date = today.strftime("%m/%d/%y")
 
 def fileCheck():
     for word in letters:
-        if (os.path.isfile(f'{word}:\\Autorun.inf')):
-            logadd("[#]", f'[{date}]', f'Autorun.inf found on {word}')
+        if (os.path.isfile(f'{word}:\\Autorun.infp')):
+            logadd("[#]", f'[{date}]', f'Autorun.infp found on {word}')
             return word
             break
         continue
     else:
-        logadd("[?]", f'[{date}]', "could not find Autorun.inf on any drive")
+        logadd("[?]", f'[{date}]', "could not find Autorun.infp on any drive")
