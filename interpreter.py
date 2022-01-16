@@ -25,8 +25,9 @@ def interpret(letter):
                 pass
         if "log" in line:
             try:
-                logtext = line.split(" ")
-                logtext = logtext[1]
+                logtext = line
+                logtext = logtext.replace("log ","");
+                logtext = logtext.replace("\n","");
                 logadd("[*]", f'[{date}]', f'logged "{logtext}" from drive {letter}')
                 pass
             except:
