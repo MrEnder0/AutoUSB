@@ -1,3 +1,4 @@
+from win10toast import ToastNotifier
 from datetime import date
 from logger import *
 import os
@@ -39,3 +40,16 @@ def interpret(letter):
             logclear()
             logadd("[#]", f'[{date}]', f'the log was cleared from {letter}')
             pass
+        if "notify" in line:
+            try:
+                syntax = line
+                syntax = syntax.replace("notify ","");
+                syntax = syntax.replace("\n","");
+                #might add customizable duration in future
+                #syntax = syntax.split("||")
+                toaster = ToastNotifier()
+                toaster.show_toast("Information+", f"{syntax}", duration=5, threaded=True)
+                pass
+            except:
+                logadd("[!]", f'[{date}]', f'failed to display notification from drive {letter}')
+                pass
