@@ -12,24 +12,30 @@ def interpret(letter):
             pass
         if line[0] == ";":
             pass
+        if "exit" in line:
+            break
         if "run" in line:
             try:
-                executeLocation = line.split(" ")
-                executeLocation = letter + ":\\" + executeLocation[1]
-                executeLocation = executeLocation.replace("\n","");
-                os.startfile(executeLocation)
-                logadd("[#]", f'[{date}]', f'launched {executeLocation} from drive {letter}')
+                syntax = line.split(" ")
+                syntax = letter + ":\\" + syntax[1]
+                syntax = syntax.replace("\n","");
+                os.startfile(syntax)
+                logadd("[#]", f'[{date}]', f'launched {syntax} from drive {letter}')
                 pass
             except:
-                logadd("[!]", f'[{date}]', f'could not launch {executeLocation} from drive {letter}')
+                logadd("[!]", f'[{date}]', f'could not launch {syntax} from drive {letter}')
                 pass
         if "log" in line:
             try:
-                logtext = line
-                logtext = logtext.replace("log ","");
-                logtext = logtext.replace("\n","");
-                logadd("[*]", f'[{date}]', f'logged "{logtext}" from drive {letter}')
+                syntax = line
+                syntax = syntax.replace("log ","");
+                syntax = syntax.replace("\n","");
+                logadd("[*]", f'[{date}]', f'logged "{syntax}" from drive {letter}')
                 pass
             except:
-                logadd("[!]", f'[{date}]', f'could not log from drive {letter}')
+                logadd("[!]", f'[{date}]', f'could not log, from drive {letter}')
                 pass
+        if "logclear" in line:
+            logclear()
+            logadd("[#]", f'[{date}]', f'the log was cleared from {letter}')
+            pass
