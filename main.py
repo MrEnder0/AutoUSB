@@ -1,7 +1,7 @@
 from interpreter import *
 from filecheck import *
 from logger import *
-import time
 
-DriveLetter = fileCheck()
-interpret(DriveLetter)
+if __name__ == "__main__":
+    DriveLetter = fileCheck()
+    interpret(DriveLetter)
