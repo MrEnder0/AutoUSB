@@ -55,11 +55,15 @@ def interpret(letter, file):
                 syntax = line
                 syntax = syntax.replace("notify ","");
                 syntax = syntax.replace("\n","");
-                #might add customizable duration in future
-                #syntax = syntax.split("||")
-                toaster = ToastNotifier()
-                toaster.show_toast("AutoUSB Project", f"{syntax}", duration=4, threaded=True)
-                pass
+                try:
+                    syntaxtimed = syntax.split(" || ")
+                    toaster = ToastNotifier()
+                    toaster.show_toast("AutoUSB Project", f"{str(syntaxtimed[0])}", duration=str(syntaxtimed[1]), threaded=True)
+                    pass
+                except:
+                    toaster = ToastNotifier()
+                    toaster.show_toast("AutoUSB Project", f"{syntax}", threaded=True)
+                    pass    
             except:
                 logadd("[!]", f'[{date}]', f'failed to display notification from drive {letter}')
                 pass
