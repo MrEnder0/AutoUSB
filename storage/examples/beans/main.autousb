@@ -1,0 +1,9 @@
+;-----START-----
+
+run beans.bat
+wait 3
+;Random beans comment
+log beans test 2
+notify beans are food
+
+;------END------
