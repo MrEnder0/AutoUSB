@@ -1,13 +1,13 @@
 from win10toast import ToastNotifier
 from datetime import date
 from logger import *
-import os
+import time, os
 
 today = date.today()
 date = today.strftime("%m/%d/%y")
 
 def interpret(letter):
-    file = open(letter + ":\\" + "Autorun.infp", "r")
+    file = open(letter + ":\\" + "main.autousb", "r")
     for line in file:
         if line[0] == "[":
             pass
@@ -48,8 +48,19 @@ def interpret(letter):
                 #might add customizable duration in future
                 #syntax = syntax.split("||")
                 toaster = ToastNotifier()
-                toaster.show_toast("Information+", f"{syntax}", duration=5, threaded=True)
+                toaster.show_toast("AutoUSB", f"{syntax}", duration=5, threaded=True)
                 pass
             except:
                 logadd("[!]", f'[{date}]', f'failed to display notification from drive {letter}')
+                pass
+        if "wait" in line:
+            try:
+                syntax = line
+                syntax = syntax.replace("wait ","");
+                syntax = syntax.replace("\n","");
+                syntax = int(syntax)
+                time.sleep(syntax)
+                pass
+            except:
+                logadd("[!]", f'[{date}]', f'failed to wait {syntax} from drive {letter}')
                 pass
