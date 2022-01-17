@@ -15,3 +15,4 @@ def fileCheck():
         continue
     else:
         logadd("[?]", f'[{date}]', "could not find main.autousb on any drive")
+        quit()
