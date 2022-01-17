@@ -1,2 +1,2 @@
-# inf+
-Makes information files great again
+# AutoDrive
+A small scripting language to turn usbs into automatic programes.
