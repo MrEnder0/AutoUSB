@@ -1,0 +1,10 @@
+;-----START-----
+
+run example.bat
+wait 3
+log example test 2
+
+;should run other file and send toast notification
+run part.autousb
+
+;------END------
