@@ -5,3 +5,4 @@ from logger import *
 if __name__ == "__main__":
     DriveLetter = fileCheck()
     preinterpret(DriveLetter)
+    quit()
