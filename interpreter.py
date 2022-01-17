@@ -48,7 +48,7 @@ def interpret(letter):
                 #might add customizable duration in future
                 #syntax = syntax.split("||")
                 toaster = ToastNotifier()
-                toaster.show_toast("AutoUSB", f"{syntax}", duration=5, threaded=True)
+                toaster.show_toast("AutoUSB Project", f"{syntax}", duration=5, threaded=True)
                 pass
             except:
                 logadd("[!]", f'[{date}]', f'failed to display notification from drive {letter}')
