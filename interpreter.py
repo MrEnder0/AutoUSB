@@ -19,18 +19,22 @@ def interpret(letter, file):
             break
     
         if line.startswith("loop"):
-            syntax = line
-            syntax = syntax.replace("loop ","");
-            syntax = syntax.replace("\n","");
-            syntaxsplit = syntax.split(" || ")
-            command = str(syntaxsplit[1])
-            times = str(syntaxsplit[0])
-            createloop(letter, command, times)
-            syntax = letter + ":\\autousb\\" + "loop.autousb"
-            time.sleep(1)
-            loopthread = threading.Thread(target=interpret(letter, open(syntax, "r"))).start()
-            pass
-        
+            try:
+                syntax = line
+                syntax = syntax.replace("loop ","");
+                syntax = syntax.replace("\n","");
+                syntaxsplit = syntax.split(" || ")
+                command = str(syntaxsplit[1])
+                times = str(syntaxsplit[0])
+                createloop(letter, command, times)
+                syntax = letter + ":\\autousb\\" + "loop.autousb"
+                time.sleep(0.5)
+                loopthread = threading.Thread(target=interpret(letter, open(syntax, "r"))).start()
+                pass
+            except:
+                logadd("[!]", f'[{date}]', "syntax error in loop")
+                pass
+
         if line.startswith("wait"):
             try:
                 syntax = line
@@ -94,9 +98,13 @@ def interpret(letter, file):
                 pass
 
 def createloop(letter, command, times):
-    loopcommands = open(letter + ":\\autousb\\" + "loop.autousb", "w")
-    timeswritten = 0
+    try:
+        loopcommands = open(letter + ":\\autousb\\" + "loop.autousb", "w")
+        timeswritten = 0
 
-    while int(times) > timeswritten:
-        loopcommands.write(f'{command}\n')
-        timeswritten += 1
+        while int(times) > timeswritten:
+            loopcommands.write(f'{command}\n')
+            timeswritten += 1
+    except:
+        logadd("[!]", f'[{date}]', f'failed to create loop from drive {letter}')
+        pass
