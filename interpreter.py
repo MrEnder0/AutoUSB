@@ -1,7 +1,7 @@
 from win10toast import ToastNotifier
 from datetime import date
 from logger import *
-import threading, time, os
+import webbrowser, threading, time, os
 
 today = date.today()
 date = today.strftime("%m/%d/%y")
@@ -76,7 +76,7 @@ def interpret(letter, file):
 
         if line.startswith("logclear"):
             logclear()
-            logadd("[#]", f'[{date}]', f'the log was cleared from {letter}')
+            logadd("[#]", f'[{date}]', f'the log was cleared from drive {letter}')
             pass
 
         if line.startswith("notify"):
@@ -95,6 +95,16 @@ def interpret(letter, file):
                     pass    
             except:
                 logadd("[!]", f'[{date}]', f'failed to display notification from drive {letter}')
+                pass
+        if line.startswith("search"):
+            try:
+                syntax = line
+                syntax = syntax.replace("search ","");
+                syntax = syntax.replace("\n","");
+                webbrowser.open(f'https://www.google.com/search?q={syntax}')
+                pass
+            except:
+                logadd("[!]", f'[{date}]', f'failed to search {syntax} from drive {letter}')
                 pass
 
 def createloop(letter, command, times):
