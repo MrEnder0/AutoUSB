@@ -7,10 +7,12 @@ today = date.today()
 date = today.strftime("%m/%d/%y")
 vars = {'autousb_version': '0.4.0', 'autousb_author': 'MrEnder'}
 
+#prepare the file
 def preinterpret(letter):
     file = open(letter + ":\\" + "main.autousb", "r")
     interpret(letter, file)
 
+#main function
 def interpret(letter, file):
     os.mkdir(letter + ":\\autousbtemp")
     for line in file:
@@ -121,12 +123,32 @@ def interpret(letter, file):
                 syntax = line
                 syntax = syntax.replace("setvar ","");
                 syntax = syntax.replace("\n","");
-                syntaxsplit = syntax.split(" = ")
-                name = syntaxsplit[0]
-                value = syntaxsplit[1]
-                #add to dictionary
-                vars[name] = value
-                
+                if " = " in syntax:
+                    syntaxsplit = syntax.split(" = ")
+                    vars[str(syntaxsplit[0])] = str(syntaxsplit[1])
+                elif " += " in syntax:
+                    syntaxsplit = syntax.split(" += ")
+                    syntax1 = replacevars(syntaxsplit[0])
+                    syntax2 = replacevars(syntaxsplit[1])
+                    vars[str(syntaxsplit[0])] = str(int(syntax1) + int(syntax2))
+                elif " -= " in syntax:
+                    syntaxsplit = syntax.split(" -= ")
+                    syntax1 = replacevars(syntaxsplit[0])
+                    syntax2 = replacevars(syntaxsplit[1])
+                    vars[str(syntaxsplit[0])] = str(int(syntax1) - int(syntax2))
+                elif " *= " in syntax:
+                    syntaxsplit = syntax.split(" *= ")
+                    syntax1 = replacevars(syntaxsplit[0])
+                    syntax2 = replacevars(syntaxsplit[1])
+                    vars[str(syntaxsplit[0])] = str(int(syntax1) * int(syntax2))
+                elif " /= " in syntax:
+                    syntaxsplit = syntax.split(" /= ")
+                    syntax1 = replacevars(syntaxsplit[0])
+                    syntax2 = replacevars(syntaxsplit[1])
+                    vars[str(syntaxsplit[0])] = str(int(syntax1) / int(syntax2))
+                else:
+                    logadd("[!]", f'[{date}]', f'failed to set variable from drive {letter}')
+                    pass
             except:
                 logadd("[!]", f'[{date}]', f'failed to set variable {syntax} from drive {letter}')
                 pass
@@ -144,6 +166,7 @@ def interpret(letter, file):
                 logadd("[!]", f'[{date}]', f'failed to delete variable {syntax} from drive {letter}')
                 pass
 
+#part of loop code
 def createloop(letter, command, times):
     try:
         loopcommands = open(letter + ":\\autousbtemp\\" + "loop.autousb", "w")
@@ -156,6 +179,7 @@ def createloop(letter, command, times):
         logadd("[!]", f'[{date}]', f'failed to create loop from drive {letter}')
         pass
 
+#part of varible code
 def replacevars(input):
     for keyword, value in vars.items():
         if keyword in input:
