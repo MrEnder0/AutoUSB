@@ -27,7 +27,7 @@ def interpret(letter, file):
                 command = str(syntaxsplit[1])
                 times = str(syntaxsplit[0])
                 createloop(letter, command, times)
-                syntax = letter + ":\\autousb\\" + "loop.autousb"
+                syntax = letter + ":\\autousbtemp\\" + "loop.autousb"
                 time.sleep(0.5)
                 loopthread = threading.Thread(target=interpret(letter, open(syntax, "r"))).start()
                 pass
@@ -99,7 +99,8 @@ def interpret(letter, file):
 
 def createloop(letter, command, times):
     try:
-        loopcommands = open(letter + ":\\autousb\\" + "loop.autousb", "w")
+        os.mkdir(letter + ":\\autousbtemp")
+        loopcommands = open(letter + ":\\autousbtemp\\" + "loop.autousb", "w")
         timeswritten = 0
 
         while int(times) > timeswritten:
