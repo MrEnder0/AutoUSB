@@ -7,4 +7,7 @@ if __name__ == "__main__":
     DriveLetter = fileCheck()
     preinterpret(DriveLetter)
 
-shutil.rmtree(f'{DriveLetter}:\\autousbtemp')
+    try:
+        shutil.rmtree(f'{DriveLetter}:\\autousbtemp')
+    except:
+        pass
