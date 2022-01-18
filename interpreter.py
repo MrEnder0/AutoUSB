@@ -12,13 +12,38 @@ def preinterpret(letter):
 
 def interpret(letter, file):
     for line in file:
-        if line[0] == ";":
+        if line.startswith(";"):
             pass
 
-        if "exit" in line:
+        if line.startswith("exit"):
             break
+    
+        if line.startswith("loop"):
+            syntax = line
+            syntax = syntax.replace("loop ","");
+            syntax = syntax.replace("\n","");
+            syntaxsplit = syntax.split(" || ")
+            command = str(syntaxsplit[1])
+            times = str(syntaxsplit[0])
+            createloop(letter, command, times)
+            syntax = letter + ":\\autousb\\" + "loop.autousb"
+            time.sleep(1)
+            loopthread = threading.Thread(target=interpret(letter, open(syntax, "r"))).start()
+            pass
+        
+        if line.startswith("wait"):
+            try:
+                syntax = line
+                syntax = syntax.replace("wait ","");
+                syntax = syntax.replace("\n","");
+                syntax = int(syntax)
+                time.sleep(syntax)
+                pass
+            except:
+                logadd("[!]", f'[{date}]', f'failed to wait {syntax} from drive {letter}')
+                pass
 
-        if "run" in line:
+        if line.startswith("run"):
             try:
                 syntax = line.split(" ")
                 syntax = letter + ":\\" + syntax[1]
@@ -34,7 +59,7 @@ def interpret(letter, file):
                 logadd("[!]", f'[{date}]', f'could not launch {syntax} from drive {letter}')
                 pass
 
-        if "log" in line:
+        if line.startswith("log"):
             try:
                 syntax = line
                 syntax = syntax.replace("log ","");
@@ -45,12 +70,12 @@ def interpret(letter, file):
                 logadd("[!]", f'[{date}]', f'could not log, from drive {letter}')
                 pass
 
-        if "logclear" in line:
+        if line.startswith("logclear"):
             logclear()
             logadd("[#]", f'[{date}]', f'the log was cleared from {letter}')
             pass
 
-        if "notify" in line:
+        if line.startswith("notify"):
             try:
                 syntax = line
                 syntax = syntax.replace("notify ","");
@@ -67,17 +92,11 @@ def interpret(letter, file):
             except:
                 logadd("[!]", f'[{date}]', f'failed to display notification from drive {letter}')
                 pass
-            
-        if "wait" in line:
-            try:
-                syntax = line
-                syntax = syntax.replace("wait ","");
-                syntax = syntax.replace("\n","");
-                syntax = int(syntax)
-                time.sleep(syntax)
-                pass
-            except:
-                logadd("[!]", f'[{date}]', f'failed to wait {syntax} from drive {letter}')
-                pass
-    
-    #end
+
+def createloop(letter, command, times):
+    loopcommands = open(letter + ":\\autousb\\" + "loop.autousb", "w")
+    timeswritten = 0
+
+    while int(times) > timeswritten:
+        loopcommands.write(f'{command}\n')
+        timeswritten += 1
