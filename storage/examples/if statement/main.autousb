@@ -1,0 +1,3 @@
+setvar beans = 10
+setvar beans /= 2
+if beans = 5.0 || notify 10 divided by 2 is 5!!!
