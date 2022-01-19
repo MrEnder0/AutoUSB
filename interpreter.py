@@ -1,4 +1,3 @@
-from multiprocessing import Condition
 from win10toast import ToastNotifier
 from datetime import date
 from logger import *
@@ -6,7 +5,7 @@ import webbrowser, threading, time, os
 
 today = date.today()
 date = today.strftime("%m/%d/%y")
-vars = {'autousb_version': '0.5.1', 'autousb_author': 'MrEnder'}
+vars = {'autousb_version': '0.5.2', 'autousb_author': 'MrEnder'}
 
 #prepare the file
 def preinterpret(letter):
