@@ -5,7 +5,7 @@ import webbrowser, threading, time, os
 
 today = date.today()
 date = today.strftime("%m/%d/%y")
-vars = {'autousb_version': '0.5.2', 'autousb_author': 'MrEnder'}
+vars = {'autousb_version': '0.5.1', 'autousb_author': 'MrEnder'}
 
 #prepare the file
 def preinterpret(letter):
@@ -42,55 +42,7 @@ def interpret(letter, file):
             except:
                 logadd("[!]", f'[{date}]', "syntax error in loop")
                 pass
-        
-        if line.startswith("setvar"):
-            try:
-                syntax = line
-                syntax = syntax.replace("setvar ","");
-                syntax = syntax.replace("\n","");
-                if " = " in syntax:
-                    syntaxsplit = syntax.split(" = ")
-                    vars[str(syntaxsplit[0])] = str(syntaxsplit[1])
-                elif " += " in syntax:
-                    syntaxsplit = syntax.split(" += ")
-                    syntax1 = replacevars(syntaxsplit[0])
-                    syntax2 = replacevars(syntaxsplit[1])
-                    vars[str(syntaxsplit[0])] = str(int(syntax1) + int(syntax2))
-                elif " -= " in syntax:
-                    syntaxsplit = syntax.split(" -= ")
-                    syntax1 = replacevars(syntaxsplit[0])
-                    syntax2 = replacevars(syntaxsplit[1])
-                    vars[str(syntaxsplit[0])] = str(int(syntax1) - int(syntax2))
-                elif " *= " in syntax:
-                    syntaxsplit = syntax.split(" *= ")
-                    syntax1 = replacevars(syntaxsplit[0])
-                    syntax2 = replacevars(syntaxsplit[1])
-                    vars[str(syntaxsplit[0])] = str(int(syntax1) * int(syntax2))
-                elif " /= " in syntax:
-                    syntaxsplit = syntax.split(" /= ")
-                    syntax1 = replacevars(syntaxsplit[0])
-                    syntax2 = replacevars(syntaxsplit[1])
-                    vars[str(syntaxsplit[0])] = str(int(syntax1) / int(syntax2))
-                else:
-                    logadd("[!]", f'[{date}]', f'failed to set variable from drive {letter}')
-                    pass
-            except:
-                logadd("[!]", f'[{date}]', f'failed to set variable {syntax} from drive {letter}')
-                pass
 
-        if line.startswith("delvar"):
-            try:
-                syntax = line
-                syntax = syntax.replace("delvar ","");
-                syntax = syntax.replace("\n","");
-                syntaxsplit = syntax.split(" = ")
-                name = syntaxsplit[0]
-                #delete from dictionary
-                del vars[name]
-            except:
-                logadd("[!]", f'[{date}]', f'failed to delete variable {syntax} from drive {letter}')
-                pass
-        
         if line.startswith("if"):
             try:
                 syntax = line
@@ -153,6 +105,54 @@ def interpret(letter, file):
                     pass
             except:
                 logadd("[!]", f'[{date}]', f'failed to create if from drive {letter}')
+                pass                        
+        
+        if line.startswith("setvar"):
+            try:
+                syntax = line
+                syntax = syntax.replace("setvar ","");
+                syntax = syntax.replace("\n","");
+                if " = " in syntax:
+                    syntaxsplit = syntax.split(" = ")
+                    vars[str(syntaxsplit[0])] = str(syntaxsplit[1])
+                elif " += " in syntax:
+                    syntaxsplit = syntax.split(" += ")
+                    syntax1 = replacevars(syntaxsplit[0])
+                    syntax2 = replacevars(syntaxsplit[1])
+                    vars[str(syntaxsplit[0])] = str(int(syntax1) + int(syntax2))
+                elif " -= " in syntax:
+                    syntaxsplit = syntax.split(" -= ")
+                    syntax1 = replacevars(syntaxsplit[0])
+                    syntax2 = replacevars(syntaxsplit[1])
+                    vars[str(syntaxsplit[0])] = str(int(syntax1) - int(syntax2))
+                elif " *= " in syntax:
+                    syntaxsplit = syntax.split(" *= ")
+                    syntax1 = replacevars(syntaxsplit[0])
+                    syntax2 = replacevars(syntaxsplit[1])
+                    vars[str(syntaxsplit[0])] = str(int(syntax1) * int(syntax2))
+                elif " /= " in syntax:
+                    syntaxsplit = syntax.split(" /= ")
+                    syntax1 = replacevars(syntaxsplit[0])
+                    syntax2 = replacevars(syntaxsplit[1])
+                    vars[str(syntaxsplit[0])] = str(int(syntax1) / int(syntax2))
+                else:
+                    logadd("[!]", f'[{date}]', f'failed to set variable from drive {letter}')
+                    pass
+            except:
+                logadd("[!]", f'[{date}]', f'failed to set variable {syntax} from drive {letter}')
+                pass
+
+        if line.startswith("delvar"):
+            try:
+                syntax = line
+                syntax = syntax.replace("delvar ","");
+                syntax = syntax.replace("\n","");
+                syntaxsplit = syntax.split(" = ")
+                name = syntaxsplit[0]
+                #delete from dictionary
+                del vars[name]
+            except:
+                logadd("[!]", f'[{date}]', f'failed to delete variable {syntax} from drive {letter}')
                 pass
 
         if line.startswith("wait"):
