@@ -5,7 +5,7 @@ import webbrowser, threading, time, os
 
 today = date.today()
 date = today.strftime("%m/%d/%y")
-vars = {'autousb_version': '0.5.1', 'autousb_author': 'MrEnder'}
+vars = {'autousb_version': '0.5.5', 'autousb_author': 'MrEnder'}
 
 #prepare the file
 def preinterpret(letter):
@@ -237,10 +237,12 @@ def interpret(letter, file):
 def createloop(letter, command, times):
     try:
         loopcommands = open(letter + ":\\autousbtemp\\" + "loop.autousb", "w")
+        commands = command.split(" | ")
         timeswritten = 0
 
         while int(times) > timeswritten:
-            loopcommands.write(f'{command}\n')
+            for command in commands:
+                loopcommands.write(f'{command}\n')
             timeswritten += 1
     except:
         logadd("[!]", f'[{date}]', f'failed to create loop from drive {letter}')
@@ -250,7 +252,9 @@ def createloop(letter, command, times):
 def createif(letter, command):
     try:
         ifcommands = open(letter + ":\\autousbtemp\\" + "if.autousb", "w")
-        ifcommands.write(command + '\n')
+        commands = command.split(" | ")
+        for command in commands:
+            ifcommands.write(command + '\n')
     except:
         logadd("[!]", f'[{date}]', f'failed to create if from drive {letter}')
         pass
