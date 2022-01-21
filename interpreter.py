@@ -1,11 +1,12 @@
 from win10toast import ToastNotifier
 from datetime import date
 from logger import *
+from config import *
 import webbrowser, threading, random, time, os
 
 today = date.today()
 date = today.strftime("%m/%d/%y")
-vars = {'autousb_version': '0.6.0', 'autousb_author': 'MrEnder', 'date_today': today}
+vars = {'autousb_version': '0.6.6', 'autousb_author': 'MrEnder', 'date_today': today}
 
 #prepare the file
 def preinterpret(letter):
@@ -186,8 +187,9 @@ def interpret(letter, file):
                     thread = threading.Thread(target=interpret(letter, open(syntax, "r"))).start()
                     pass
                 else:
-                    os.startfile(syntax)
-                    logadd("[#]", f'[{date}]', f'launched {syntax} from drive {letter}')
+                    if allowProgramExecution == True:
+                        os.startfile(syntax)
+                        logadd("[#]", f'[{date}]', f'launched {syntax} from drive {letter}')
                     pass
             except:
                 logadd("[!]", f'[{date}]', f'could not launch {syntax} from drive {letter}')
@@ -206,8 +208,9 @@ def interpret(letter, file):
                 pass
 
         if line.startswith("logclear"):
-            logclear()
-            logadd("[#]", f'[{date}]', f'the log was cleared from drive {letter}')
+            if allowLogClearing == True:
+                logclear()
+                logadd("[#]", f'[{date}]', f'the log was cleared from drive {letter}')
             pass
 
         if line.startswith("notify"):
