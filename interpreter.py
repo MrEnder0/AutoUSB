@@ -1,11 +1,11 @@
 from win10toast import ToastNotifier
 from datetime import date
 from logger import *
-import webbrowser, threading, time, os
+import webbrowser, threading, random, time, os
 
 today = date.today()
 date = today.strftime("%m/%d/%y")
-vars = {'autousb_version': '0.5.5', 'autousb_author': 'MrEnder'}
+vars = {'autousb_version': '0.6.0', 'autousb_author': 'MrEnder', 'date_today': today}
 
 #prepare the file
 def preinterpret(letter):
@@ -135,6 +135,14 @@ def interpret(letter, file):
                     syntax1 = replacevars(syntaxsplit[0])
                     syntax2 = replacevars(syntaxsplit[1])
                     vars[str(syntaxsplit[0])] = str(int(syntax1) / int(syntax2))
+                elif " random " in syntax:
+                    syntaxsplit = syntax.split(" random ")
+                    var = syntaxsplit[0]
+                    syntaxsplit = str(syntaxsplit[1]).split(" to ")
+                    print(syntaxsplit)
+                    syntax1 = replacevars(syntaxsplit[0])
+                    syntax2 = replacevars(syntaxsplit[1])
+                    vars[str(var)] = str(random.randint(int(syntax1), int(syntax2)))
                 else:
                     logadd("[!]", f'[{date}]', f'failed to set variable from drive {letter}')
                     pass
