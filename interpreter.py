@@ -6,7 +6,7 @@ import webbrowser, threading, random, time, os
 
 today = date.today()
 date = today.strftime("%m/%d/%y")
-vars = {'autousb_version': '0.6.6', 'autousb_author': 'MrEnder', 'date_today': today}
+vars = {'autousb_version': '0.6.8', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'num_pi': '3.1415926535', 'num_e': '2.7182818284'}
 
 #prepare the file
 def preinterpret(letter):
