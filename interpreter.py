@@ -39,6 +39,8 @@ def interpret(letter, file):
                 syntax = letter + ":\\autousbtemp\\" + "loop.autousb"
                 time.sleep(0.3)
                 loopthread = threading.Thread(target=interpret(letter, open(syntax, "r"))).start()
+                while loopthread.is_alive():
+                    pass
                 pass
             except:
                 logadd("[!]", f'[{date}]', "syntax error in loop")
@@ -60,6 +62,8 @@ def interpret(letter, file):
                         syntax = letter + ":\\autousbtemp\\" + "if.autousb"
                         time.sleep(0.3)
                         ifthread = threading.Thread(target=interpret(letter, open(syntax, "r"))).start()
+                        while ifthread.is_alive():
+                            pass
                         pass
                 elif " != " in condition:
                     syntaxsplit = condition.split(" != ")
@@ -68,6 +72,8 @@ def interpret(letter, file):
                         syntax = letter + ":\\autousbtemp\\" + "if.autousb"
                         time.sleep(0.3)
                         ifthread = threading.Thread(target=interpret(letter, open(syntax, "r"))).start()
+                        while ifthread.is_alive():
+                            pass
                         pass
                 elif " > " in condition:
                     syntaxsplit = condition.split(" > ")
@@ -76,6 +82,8 @@ def interpret(letter, file):
                         syntax = letter + ":\\autousbtemp\\" + "if.autousb"
                         time.sleep(0.3)
                         ifthread = threading.Thread(target=interpret(letter, open(syntax, "r"))).start()
+                        while ifthread.is_alive():
+                            pass
                         pass
                 elif " < " in condition:
                     syntaxsplit = condition.split(" < ")
@@ -84,6 +92,8 @@ def interpret(letter, file):
                         syntax = letter + ":\\autousbtemp\\" + "if.autousb"
                         time.sleep(0.3)
                         ifthread = threading.Thread(target=interpret(letter, open(syntax, "r"))).start()
+                        while ifthread.is_alive():
+                            pass
                         pass
                 elif " >= " in condition:
                     syntaxsplit = condition.split(" >= ")
@@ -92,6 +102,8 @@ def interpret(letter, file):
                         syntax = letter + ":\\autousbtemp\\" + "if.autousb"
                         time.sleep(0.3)
                         ifthread = threading.Thread(target=interpret(letter, open(syntax, "r"))).start()
+                        while ifthread.is_alive():
+                            pass
                         pass
                 elif " <= " in condition:
                     syntaxsplit = condition.split(" <= ")
@@ -100,6 +112,8 @@ def interpret(letter, file):
                         syntax = letter + ":\\autousbtemp\\" + "if.autousb"
                         time.sleep(0.3)
                         ifthread = threading.Thread(target=interpret(letter, open(syntax, "r"))).start()
+                        while ifthread.is_alive():
+                            pass
                         pass
                 else:
                     logadd("[!]", f'[{date}]', f'invalid if statement from drive {letter}')
@@ -140,7 +154,6 @@ def interpret(letter, file):
                     syntaxsplit = syntax.split(" random ")
                     var = syntaxsplit[0]
                     syntaxsplit = str(syntaxsplit[1]).split(" to ")
-                    print(syntaxsplit)
                     syntax1 = replacevars(syntaxsplit[0])
                     syntax2 = replacevars(syntaxsplit[1])
                     vars[str(var)] = str(random.randint(int(syntax1), int(syntax2)))
@@ -185,6 +198,8 @@ def interpret(letter, file):
                 syntax = replacevars(syntax)
                 if ".autousb" in line:
                     thread = threading.Thread(target=interpret(letter, open(syntax, "r"))).start()
+                    while thread.is_alive():
+                        pass
                     pass
                 else:
                     if allowProgramExecution == True:
