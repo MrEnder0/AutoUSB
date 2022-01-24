@@ -1,2 +1,2 @@
-title inf+ By: MrEnder0
+title AutoUSB By: Team Codingo
 python main.py
