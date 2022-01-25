@@ -117,7 +117,7 @@ def interpret(letter, file):
                         pass
                 elif " contains " in condition:
                     syntaxsplit = condition.split(" contains ")
-                    if syntaxsplit[0] in syntaxsplit[1]:
+                    if syntaxsplit[1] in syntaxsplit[0]:
                         createif(letter, command)
                         syntax = letter + ":\\autousbtemp\\" + "if.autousb"
                         time.sleep(0.3)
