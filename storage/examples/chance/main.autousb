@@ -1,0 +1,2 @@
+setvar varible random 1 to 10
+if 12345 contains varible || notify The var was between 1-5 and it was varible
