@@ -243,7 +243,7 @@ def interpret(letter, file):
                 syntax = syntax.replace("\n","");
                 syntax = replacevars(syntax)
                 try:
-                    syntax = syntax.split(" *for ")
+                    syntax = syntax.split(" *timed ")
                     toaster = ToastNotifier()
                     toaster.show_toast("AutoUSB Project", f"{str(syntax[0])}", duration=int(syntax[1]), threaded=True)
                     pass
