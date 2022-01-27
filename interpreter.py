@@ -6,7 +6,7 @@ import webbrowser, threading, random, time, os
 
 today = date.today()
 date = today.strftime("%m/%d/%y")
-vars = {'autousb_version': '0.7.6', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'num_pi': '3.1415926535', 'num_e': '2.7182818284'}
+vars = {'autousb_version': '0.7.8', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'num_pi': '3.1415926535', 'num_e': '2.7182818284'}
 
 #prepare the file
 def preinterpret(letter):
@@ -243,7 +243,7 @@ def interpret(letter, file):
                 syntax = syntax.replace("\n","");
                 syntax = replacevars(syntax)
                 try:
-                    syntax = syntax.split(" for ")
+                    syntax = syntax.split(" *for ")
                     toaster = ToastNotifier()
                     toaster.show_toast("AutoUSB Project", f"{str(syntax[0])}", duration=int(syntax[1]), threaded=True)
                     pass
