@@ -1,0 +1,2 @@
+setvar number = 0
+loop 5 || setvar number += 1 | notify number *for 1 | wait 2
