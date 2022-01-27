@@ -242,12 +242,16 @@ def interpret(letter, file):
                 syntax = syntax.replace("notify ","");
                 syntax = syntax.replace("\n","");
                 syntax = replacevars(syntax)
-                try:
+                if " *timed " in syntax:
                     syntax = syntax.split(" *timed ")
                     toaster = ToastNotifier()
                     toaster.show_toast("AutoUSB Project", f"{str(syntax[0])}", duration=int(syntax[1]), threaded=True)
                     pass
-                except:
+                elif " | " in syntax:
+                    syntax = syntax.split(" | ")
+                    toaster = ToastNotifier()
+                    toaster.show_toast("AutoUSB Project", f"{str(syntax[0])}", duration=int(syntax[1]), threaded=True)
+                else:
                     toaster = ToastNotifier()
                     toaster.show_toast("AutoUSB Project", f"{syntax}", threaded=True)
                     pass    
