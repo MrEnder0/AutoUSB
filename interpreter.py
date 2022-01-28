@@ -2,11 +2,11 @@ from win10toast import ToastNotifier
 from datetime import date
 from logger import *
 from config import *
-import webbrowser, threading, random, time, os
+import webbrowser, threading, random, time, os, sys
 
 today = date.today()
 date = today.strftime("%m/%d/%y")
-vars = {'autousb_version': '0.7.8', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'num_pi': '3.1415926535', 'num_e': '2.7182818284'}
+vars = {'autousb_version': '0.7.9', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'num_pi': '3.1415926535', 'num_e': '2.7182818284'}
 
 #prepare the file
 def preinterpret(letter):
@@ -166,6 +166,15 @@ def interpret(letter, file):
                     syntax1 = replacevars(syntaxsplit[0])
                     syntax2 = replacevars(syntaxsplit[1])
                     vars[str(var)] = str(random.randint(int(syntax1), int(syntax2)))
+                elif " join " in syntax:
+                    syntaxsplit = syntax.split(" join ")
+                    syntax1 = replacevars(syntaxsplit[0])
+                    syntax2 = replacevars(syntaxsplit[1])
+                    vars[str(var)] = str(syntax1) + str(syntax2)
+                elif " length " in syntax:
+                    syntaxsplit = syntax.split(" length ")
+                    syntax1 = replacevars(syntaxsplit[0])
+                    vars[str(var)] = str(len(syntax1))
                 else:
                     logadd("[!]", f'[{date}]', f'failed to set variable from drive {letter}')
                     pass
@@ -216,6 +225,19 @@ def interpret(letter, file):
                     pass
             except:
                 logadd("[!]", f'[{date}]', f'could not launch {syntax} from drive {letter}')
+                pass
+
+        if line.startswith("close"):
+            try:
+                syntax = line
+                syntax = syntax.replace("exit ","");
+                syntax = syntax.replace("\n","");
+                syntax = replacevars(syntax)
+                syntax = int(syntax)
+                sys.exit(syntax)
+                pass
+            except:
+                logadd("[!]", f'[{date}]', f'failed to exit {syntax} from drive {letter}')
                 pass
 
         if line.startswith("log"):
