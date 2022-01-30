@@ -1,0 +1,4 @@
+setvar randomnum random 1 to 20
+wait randomnum
+notify You can do this keep going!
+run main.autousb
