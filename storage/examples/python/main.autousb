@@ -1,0 +1,2 @@
+run python print("hi this is Python in AutoUSB")
+run python time.sleep(5)
