@@ -6,7 +6,7 @@ import webbrowser, threading, random, time, os, sys
 
 today = date.today()
 date = today.strftime("%m/%d/%y")
-vars = {'autousb_version': '0.8.5', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'num_pi': '3.1415926535', 'num_e': '2.7182818284'}
+vars = {'autousb_version': '0.8.7', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'π': '3.1415926535', 'num_pi': '3.1415926535', 'num_e': '2.7182818284'}
 
 #prepare the file
 def preinterpret(letter):
@@ -38,6 +38,13 @@ def interpret(letter, file):
                 command = str(syntaxsplit[1])
                 times = str(syntaxsplit[0])
                 times = replacevars(times)
+                if "random " in times:
+                    times = times.replace("random ","")
+                    times = times.split(" to ")
+                    min = times[0]
+                    max = times[1]
+                    times = random.randint(int(min), int(max))
+
                 createloop(letter, command, times)
                 syntax = letter + ":\\autousbtemp\\" + "loop.autousb"
                 time.sleep(0.2)
