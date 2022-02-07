@@ -6,7 +6,7 @@ import webbrowser, threading, random, time, os, sys
 
 today = date.today()
 date = today.strftime("%m/%d/%y")
-vars = {'autousb_version': '0.8.8', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'π': '3.1415926535', 'num_pi': '3.1415926535', 'num_e': '2.7182818284'}
+vars = {'autousb_version': '0.8.9', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'π': '3.1415926535', 'num_pi': '3.1415926535', 'num_e': '2.7182818284'}
 
 #prepare the file
 def preinterpret(letter):
@@ -256,14 +256,14 @@ def interpret(letter, file):
         if line.startswith("close"):
             try:
                 syntax = line
-                syntax = syntax.replace("exit ","")
+                syntax = syntax.replace("close ","")
                 syntax = syntax.replace("\n","")
                 syntax = replacevars(syntax)
                 syntax = int(syntax)
                 sys.exit(syntax)
                 continue
             except:
-                logadd("[!]", f'[{date}]', f'failed to exit {syntax} from drive {letter}')
+                logadd("[!]", f'[{date}]', f'failed to close program {syntax} from drive {letter}')
                 continue
 
         if line.startswith("log"):
@@ -329,6 +329,10 @@ def interpret(letter, file):
                         syntax = syntax.replace("delete ","")
                         path = letter + "://" + syntax
                         os.remove(path)
+                    if "rename " in syntax:
+                        original = str(syntaxsplit[0]).replace("rename ","")
+                        originalPath = letter + "://" + original
+                        os.rename(originalPath, letter + "://" + syntaxsplit[1])
                     continue
                 except:
                     logadd("[!]", f'[{date}]', f'failed to edit file on {letter}')
