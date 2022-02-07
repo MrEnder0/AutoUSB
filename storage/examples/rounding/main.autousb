@@ -1,0 +1,3 @@
+setvar somedata1 = 5.35
+setvar somedata2 round somedata1
+notify somedata2
