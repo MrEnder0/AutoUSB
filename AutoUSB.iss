@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "AutoUSB"
-#define MyAppVersion "0.8.5"
+#define MyAppVersion "0.9.0"
 #define MyAppPublisher "Codingo"
 #define MyAppExeName "AutoUSB.exe"
 #define MyAppAssocName MyAppName + " Script"
@@ -51,4 +51,3 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
-
