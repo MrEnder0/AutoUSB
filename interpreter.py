@@ -6,7 +6,7 @@ import webbrowser, threading, random, time, os, sys
 
 today = date.today()
 date = today.strftime("%m/%d/%y")
-vars = {'autousb_version': '0.8.7', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'π': '3.1415926535', 'num_pi': '3.1415926535', 'num_e': '2.7182818284'}
+vars = {'autousb_version': '0.8.8', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'π': '3.1415926535', 'num_pi': '3.1415926535', 'num_e': '2.7182818284'}
 
 #prepare the file
 def preinterpret(letter):
@@ -306,6 +306,33 @@ def interpret(letter, file):
             except:
                 logadd("[!]", f'[{date}]', f'failed to display notification from drive {letter}')
                 continue
+
+        if line.startswith("text"):
+            if allowFileEditing:
+                try:
+                    syntax = line
+                    syntax = syntax.replace("text ","")
+                    syntax = syntax.replace("\n","")
+                    syntax = replacevars(syntax)
+                    syntaxsplit = syntax.split(" | ")
+                    if "create " in syntax:
+                        syntax = syntax.replace("create ","")
+                        path = letter + "://" + syntax
+                        with open(path, "w") as file:
+                            file.write("")
+                    if "append " in syntax:
+                        name = str(syntaxsplit[0]).replace("append ","")
+                        path = letter + "://" + name
+                        with open(path, "a") as file:
+                            file.write(syntaxsplit[1] + "\n")
+                    if "delete " in syntax:
+                        syntax = syntax.replace("delete ","")
+                        path = letter + "://" + syntax
+                        os.remove(path)
+                    continue
+                except:
+                    logadd("[!]", f'[{date}]', f'failed to edit file on {letter}')
+                    continue
 
         if line.startswith("search"):
             try:
