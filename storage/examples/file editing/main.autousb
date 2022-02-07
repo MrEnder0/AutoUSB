@@ -1,0 +1,12 @@
+;delete file if already exists
+text delete supercooldata.txt
+
+textData = This is the second line.
+
+;create file on main dir of drive and write data to it
+text create supercooldata.txt
+text append supercooldata.txt | This should be the first line every time you run this!
+text append supercooldata.txt | textData
+
+;rename file for no reason
+text rename supercooldata.txt supercooldata2.txt
