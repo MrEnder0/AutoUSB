@@ -6,7 +6,7 @@ import webbrowser, threading, random, time, os, sys
 
 today = date.today()
 date = today.strftime("%m/%d/%y")
-vars = {'autousb_version': '0.8.9', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'π': '3.1415926535', 'num_pi': '3.1415926535', 'num_e': '2.7182818284'}
+vars = {'autousb_version': '0.9.0', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'π': '3.1415926535', 'num_pi': '3.1415926535', 'num_e': '2.7182818284'}
 
 #prepare the file
 def preinterpret(letter):
@@ -183,11 +183,23 @@ def interpret(letter, file):
                     syntax2 = replacevars(syntaxsplit[1])
                     vars[str(var)] = str(random.randint(int(syntax1), int(syntax2)))
                     continue
+                elif " round " in syntax:
+                    syntaxsplit = syntax.split(" round ")
+                    var =  syntaxsplit[0]
+                    value = replacevars(syntaxsplit[1])
+                    vars[str(var)] = str(round(float(value)))
+                    continue
                 elif " join " in syntax:
                     syntaxsplit = syntax.split(" join ")
                     syntax1 = replacevars(syntaxsplit[0])
                     syntax2 = replacevars(syntaxsplit[1])
                     vars[str(var)] = str(syntax1) + str(syntax2)
+                    continue
+                elif " file " in syntax:
+                    syntaxsplit = syntax.split(" file ")
+                    syntax1 = replacevars(syntaxsplit[0])
+                    syntax2 = replacevars(syntaxsplit[1])
+                    vars[str(var)] = str(open(syntax1, "r").read())
                     continue
                 elif " length " in syntax:
                     syntaxsplit = syntax.split(" length ")
