@@ -6,7 +6,7 @@ import webbrowser, threading, random, time, os, sys
 
 today = date.today()
 date = today.strftime("%m/%d/%y")
-vars = {'autousb_version': '0.9.0', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'π': '3.1415926535', 'num_pi': '3.1415926535', 'num_e': '2.7182818284'}
+vars = {'autousb_version': '0.9.2', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'π': '3.1415926535', 'num_pi': '3.1415926535', 'num_e': '2.7182818284'}
 
 #prepare the file
 def preinterpret(letter):
@@ -29,6 +29,32 @@ def interpret(letter, file):
         if line.startswith("exit"):
             break
 
+        if line.startswith("help"):
+            try:
+                syntax = line
+                syntax = syntax.replace("help", "")
+                syntax = syntax.replace("\n", "")
+                for command in syntaxsplit.split(" | "):
+                    if command == ";": print("To comment put ; at the begining of the line this can help orginize your autousb scripts code.")
+                    elif command == "comments": print("To comment put ; at the begining of the line this can help orginize your autousb scripts code.")
+                    elif command == "exit": print("To exit the interpreter type exit.")
+                    elif command == "loop": print("This i used to loop code in your programs to use put loop (times) then put || then your commands if multiple put | inbetween each one.")
+                    elif command == "if": print("This is used to check if a condition is true or false if it is put if (condition) then put || then your commands if multiple put | inbetween each one.")
+                    elif command == "setvar": print("This is used to set a variable to a value, to use put setvar (variable) (value), This can be used in almost any command that excepts arguments.")
+                    elif command == "delvar": print("This is used to delete a variable, to use put delvar (variable).")
+                    elif command == "wait": print("This is used to wait for a certain amount of time, to use put wait (time).")
+                    elif command == "run": print("This is used to run a programs, python, or other AutoUSB scripts, to use put run (program). Also if you want to run python put the word python before the python code.")
+                    elif command == "close": print("This is used to close a program, to use put close (program).")
+                    elif command == "log": print("This is used to log a message, to use put log (message). This is very helpful for debugging your scripts.")
+                    elif command == "logclear": print("This is a way to automatically clear logs so you dont have to.")
+                    elif command == "notify": print("This is used to send a notification to your desktop, to use put notify (message) | (time limit). Also if your using this command inside a statement or loop then use *timed instead of | .")
+                    elif command == "text": print("This is used to edit text documents on your pc, to use put text (action) (file) (text).")
+                    elif command == "search": print("This is used to search on your webbrowser.")
+                    elif command == "examples": print("If you would like some example scripts made check the storage folder inside the AutoUSB dir and open the examples folder this may help beginners learn how to use AutoUSB and some of its use cases.")
+                    else: print("Hmm looks like your not sure what you can put into this command. To help use any of these commands: ;, comments, exit, loop, if, setvar, delvar, wait, run, close, log, logclear, notify, text, search, examples. Hope this helps.")
+            except:
+                logadd("[!]", f'[{date}]', f'failed to help like that must really suck :/ {letter}')
+                pass
         if line.startswith("loop"):
             try:
                 syntax = line
@@ -337,14 +363,14 @@ def interpret(letter, file):
                         path = letter + "://" + name
                         with open(path, "a") as file:
                             file.write(syntaxsplit[1] + "\n")
-                    if "delete " in syntax:
-                        syntax = syntax.replace("delete ","")
-                        path = letter + "://" + syntax
-                        os.remove(path)
                     if "rename " in syntax:
                         original = str(syntaxsplit[0]).replace("rename ","")
                         originalPath = letter + "://" + original
                         os.rename(originalPath, letter + "://" + syntaxsplit[1])
+                    if "delete " in syntax:
+                        syntax = syntax.replace("delete ","")
+                        path = letter + "://" + syntax
+                        os.remove(path)
                     continue
                 except:
                     logadd("[!]", f'[{date}]', f'failed to edit file on {letter}')
