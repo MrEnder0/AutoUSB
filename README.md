@@ -1,2 +1,2 @@
 # AutoUSB
-A small scripting language to turn usbs into automatic programs.
+A small test scripting language to turn usbs into automatic programs.
