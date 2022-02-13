@@ -1,13 +1,13 @@
 from win10toast import ToastNotifier
+from playsound import playsound
 from datetime import date
 from logger import *
 from config import *
-from playsound import playsound
 import webbrowser, threading, random, time, os, sys
 
 today = date.today()
 date = today.strftime("%m/%d/%y")
-vars = {'autousb_version': '0.9.8', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'π': '3.1415926535', 'num_pi': '3.1415926535', 'num_e': '2.7182818284'}
+vars = {'autousb_version': '1.0.0', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'π': '3.1415926535', 'num_pi': '3.1415926535', 'num_e': '2.7182818284', 'num_forever': '9999999999999999999999999'}
 
 #prepare the file
 def preinterpret(letter):
@@ -226,30 +226,30 @@ def interpret(letter, file):
                     continue
                 elif " join " in syntax:
                     syntaxsplit = syntax.split(" join ")
-                    syntax1 = replacevars(syntaxsplit[0])
+                    var = replacevars(syntaxsplit[0])
                     syntax2 = replacevars(syntaxsplit[1])
                     vars[str(var)] = str(syntax1) + str(syntax2)
                     continue
                 elif " file " in syntax:
                     syntaxsplit = syntax.split(" file ")
-                    syntax1 = replacevars(syntaxsplit[0])
-                    syntax2 = replacevars(syntaxsplit[1])
-                    vars[str(var)] = str(open(syntax1, "r").read())
+                    var = replacevars(syntaxsplit[0])
+                    syntax2 = replacevars(letter + ":\\" + syntaxsplit[1])
+                    vars[str(var)] = str(open(syntax2, "r").read())
                     continue
                 elif " length " in syntax:
                     syntaxsplit = syntax.split(" length ")
                     syntax1 = replacevars(syntaxsplit[0])
-                    vars[str(var)] = str(len(syntax1))
+                    vars[str(syntax1)] = str(len(syntax1))
                     continue
                 elif " lower " in syntax:
                     syntaxsplit = syntax.split(" lower ")
                     syntax1 = replacevars(syntaxsplit[0])
-                    vars[str(var)] = str(syntax1.lower())
+                    vars[str(syntax1)] = str(syntax1.lower())
                     continue
                 elif " upper " in syntax:
                     syntaxsplit = syntax.split(" upper ")
                     syntax1 = replacevars(syntaxsplit[0])
-                    vars[str(var)] = str(syntax1.upper())
+                    vars[str(syntax1)] = str(syntax1.upper())
                     continue
                 elif " replace " in syntax:
                     syntaxsplit = syntax.split(" replace ")
@@ -257,7 +257,7 @@ def interpret(letter, file):
                     value = replacevars(syntaxsplit[1])
                     oldValue = value.split(" with ")[0]
                     newValue = value.split(" with ")[1]
-                    vars[str(var)] = str(name.replace(oldValue, newValue))
+                    vars[str(name)] = str(name.replace(oldValue, newValue))
                 else:
                     logadd("[!]", f'[{date}]', f'failed to set variable from drive {letter}')
                     continue
@@ -342,6 +342,40 @@ def interpret(letter, file):
                 logadd("[!]", f'[{date}]', f'failed to play sound at {syntax} from drive {letter}')
                 continue
 
+        if line.startswith("text"):
+            if allowFileEditing:
+                try:
+                    syntax = line
+                    syntax = syntax.replace("text ","")
+                    syntax = syntax.replace("\n","")
+                    syntax = replacevars(syntax)
+                    if " *file " in syntax:
+                        syntaxsplit = syntax.split(" *file ")
+                    else:
+                        syntaxsplit = syntax.split(" | ")
+                    if "create " in syntax:
+                        syntax = syntax.replace("create ","")
+                        path = letter + "://" + syntax
+                        with open(path, "w") as file:
+                            file.write("")
+                    if "append " in syntax:
+                        data = str(syntaxsplit[0]).replace("append ","")
+                        path = letter + "://" + syntaxsplit[1]
+                        with open(path, "a") as file:
+                            file.write(data + "\n")
+                    if "rename " in syntax:
+                        original = str(syntaxsplit[0]).replace("rename ","")
+                        originalPath = letter + "://" + original
+                        os.rename(originalPath, letter + "://" + syntaxsplit[1])
+                    if "delete " in syntax:
+                        syntax = syntax.replace("delete ","")
+                        path = letter + "://" + syntax
+                        os.remove(path)
+                    continue
+                except:
+                    logadd("[!]", f'[{date}]', f'failed to edit file on {letter}')
+                    continue
+
         if line.startswith("notify"):
             try:
                 syntax = line
@@ -364,37 +398,6 @@ def interpret(letter, file):
             except:
                 logadd("[!]", f'[{date}]', f'failed to display notification from drive {letter}')
                 continue
-
-        if line.startswith("text"):
-            if allowFileEditing:
-                try:
-                    syntax = line
-                    syntax = syntax.replace("text ","")
-                    syntax = syntax.replace("\n","")
-                    syntax = replacevars(syntax)
-                    syntaxsplit = syntax.split(" | ")
-                    if "create " in syntax:
-                        syntax = syntax.replace("create ","")
-                        path = letter + "://" + syntax
-                        with open(path, "w") as file:
-                            file.write("")
-                    if "append " in syntax:
-                        name = str(syntaxsplit[0]).replace("append ","")
-                        path = letter + "://" + name
-                        with open(path, "a") as file:
-                            file.write(syntaxsplit[1] + "\n")
-                    if "rename " in syntax:
-                        original = str(syntaxsplit[0]).replace("rename ","")
-                        originalPath = letter + "://" + original
-                        os.rename(originalPath, letter + "://" + syntaxsplit[1])
-                    if "delete " in syntax:
-                        syntax = syntax.replace("delete ","")
-                        path = letter + "://" + syntax
-                        os.remove(path)
-                    continue
-                except:
-                    logadd("[!]", f'[{date}]', f'failed to edit file on {letter}')
-                    continue
 
         if line.startswith("log"):
             try:
