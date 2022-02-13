@@ -6,7 +6,7 @@ import webbrowser, threading, random, time, os, sys
 
 today = date.today()
 date = today.strftime("%m/%d/%y")
-vars = {'autousb_version': '0.9.2', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'π': '3.1415926535', 'num_pi': '3.1415926535', 'num_e': '2.7182818284'}
+vars = {'autousb_version': '0.9.4', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'π': '3.1415926535', 'num_pi': '3.1415926535', 'num_e': '2.7182818284'}
 
 #prepare the file
 def preinterpret(letter):
@@ -201,6 +201,12 @@ def interpret(letter, file):
                     syntax2 = replacevars(syntaxsplit[1])
                     vars[str(syntaxsplit[0])] = str(int(syntax1) / int(syntax2))
                     continue
+                elif " %= " in syntax:
+                    syntaxsplit = syntax.split(" %= ")
+                    syntax1 = replacevars(syntaxsplit[0])
+                    syntax2 = replacevars(syntaxsplit[1])
+                    vars[str(syntaxsplit[0])] = str(int(syntax1) % int(syntax2))
+                    continue
                 elif " random " in syntax:
                     syntaxsplit = syntax.split(" random ")
                     var = syntaxsplit[0]
@@ -232,6 +238,23 @@ def interpret(letter, file):
                     syntax1 = replacevars(syntaxsplit[0])
                     vars[str(var)] = str(len(syntax1))
                     continue
+                elif " lower " in syntax:
+                    syntaxsplit = syntax.split(" lower ")
+                    syntax1 = replacevars(syntaxsplit[0])
+                    vars[str(var)] = str(syntax1.lower())
+                    continue
+                elif " upper " in syntax:
+                    syntaxsplit = syntax.split(" upper ")
+                    syntax1 = replacevars(syntaxsplit[0])
+                    vars[str(var)] = str(syntax1.upper())
+                    continue
+                elif " replace " in syntax:
+                    syntaxsplit = syntax.split(" replace ")
+                    name = replacevars(syntaxsplit[0])
+                    value = replacevars(syntaxsplit[1])
+                    oldValue = value.split(" with ")[0]
+                    newValue = value.split(" with ")[1]
+                    vars[str(var)] = str(name.replace(oldValue, newValue))
                 else:
                     logadd("[!]", f'[{date}]', f'failed to set variable from drive {letter}')
                     continue
