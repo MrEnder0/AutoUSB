@@ -1,0 +1,4 @@
+;Should print out its own code
+
+setvar quineContents file main.autousb
+notify quineContents
