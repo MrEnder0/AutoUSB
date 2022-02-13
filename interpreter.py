@@ -2,11 +2,12 @@ from win10toast import ToastNotifier
 from datetime import date
 from logger import *
 from config import *
+from playsound import playsound
 import webbrowser, threading, random, time, os, sys
 
 today = date.today()
 date = today.strftime("%m/%d/%y")
-vars = {'autousb_version': '0.9.4', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'π': '3.1415926535', 'num_pi': '3.1415926535', 'num_e': '2.7182818284'}
+vars = {'autousb_version': '0.9.8', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'π': '3.1415926535', 'num_pi': '3.1415926535', 'num_e': '2.7182818284'}
 
 #prepare the file
 def preinterpret(letter):
@@ -51,6 +52,8 @@ def interpret(letter, file):
                     elif command == "text": print("This is used to edit text documents on your pc, to use put text (action) (file) (text).")
                     elif command == "search": print("This is used to search on your webbrowser.")
                     elif command == "examples": print("If you would like some example scripts made check the storage folder inside the AutoUSB dir and open the examples folder this may help beginners learn how to use AutoUSB and some of its use cases.")
+                    elif command == "about": print(f'AutoUSB version {vars["autousb_version"]}AutoUSB release type {vars["autousb_release_type"]} by {vars["autousb_author"]}')
+                    elif command == "math": print("You can do basic math like + - * / % with the setvar command you also have access to pi and e. These 2 numbers can be used by using num_pi or num_e")
                     else: print("Hmm looks like your not sure what you can put into this command. To help use any of these commands: ;, comments, exit, loop, if, setvar, delvar, wait, run, close, log, logclear, notify, text, search, examples. Hope this helps.")
             except:
                 logadd("[!]", f'[{date}]', f'failed to help like that must really suck :/ {letter}')
@@ -327,23 +330,17 @@ def interpret(letter, file):
                 logadd("[!]", f'[{date}]', f'failed to close program {syntax} from drive {letter}')
                 continue
 
-        if line.startswith("log"):
+        if line.startswith("sound"):
             try:
                 syntax = line
-                syntax = syntax.replace("log ","")
+                syntax = syntax.replace("sound ","")
                 syntax = syntax.replace("\n","")
                 syntax = replacevars(syntax)
-                logadd("[*]", f'[{date}]', f'logged "{syntax}" from drive {letter}')
+                playsound(letter + ":\\" + syntax)
                 continue
             except:
-                logadd("[!]", f'[{date}]', f'could not log, from drive {letter}')
+                logadd("[!]", f'[{date}]', f'failed to play sound at {syntax} from drive {letter}')
                 continue
-
-        if line.startswith("logclear"):
-            if allowLogClearing == True:
-                logclear()
-                logadd("[#]", f'[{date}]', f'the log was cleared from drive {letter}')
-            continue
 
         if line.startswith("notify"):
             try:
@@ -398,6 +395,24 @@ def interpret(letter, file):
                 except:
                     logadd("[!]", f'[{date}]', f'failed to edit file on {letter}')
                     continue
+
+        if line.startswith("log"):
+            try:
+                syntax = line
+                syntax = syntax.replace("log ","")
+                syntax = syntax.replace("\n","")
+                syntax = replacevars(syntax)
+                logadd("[*]", f'[{date}]', f'logged "{syntax}" from drive {letter}')
+                continue
+            except:
+                logadd("[!]", f'[{date}]', f'could not log, from drive {letter}')
+                continue
+
+        if line.startswith("logclear"):
+            if allowLogClearing == True:
+                logclear()
+                logadd("[#]", f'[{date}]', f'the log was cleared from drive {letter}')
+            continue
 
         if line.startswith("search"):
             try:
