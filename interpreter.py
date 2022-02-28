@@ -1,13 +1,10 @@
-from win10toast import ToastNotifier
-from playsound import playsound
-from datetime import date
-from logger import *
-from config import *
+from win10toast import ToastNotifier; from playsound import playsound; from datetime import date; from logger import *; from config import *
 import webbrowser, threading, random, time, os, sys
 
 today = date.today()
 date = today.strftime("%m/%d/%y")
-vars = {'autousb_version': '1.0.0', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'π': '3.1415926535', 'num_pi': '3.1415926535', 'num_e': '2.7182818284', 'num_forever': '9999999999999999999999999'}
+vars = {'autousb_version': '1.0.1', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'π': '3.1415926535', 'num_pi': '3.1415926535', 'num_e': '2.7182818284', 'num_inf': '9999999999999999999999999'}
+imports = {}; impc = 0
 
 #prepare the file
 def preinterpret(letter):
@@ -428,6 +425,33 @@ def interpret(letter, file):
             except:
                 logadd("[!]", f'[{date}]', f'failed to search {syntax} from drive {letter}')
                 continue
+        
+        if line.startswith("import"):
+            try:
+                syntax = line
+                syntax = syntax.replace("import ","")
+                syntax = syntax.replace("\n","")
+                syntax = replacevars(syntax)
+                imports[str(syntax)] = str(f'storage/packages/{syntax}')
+                print(imports)
+                continue
+            except:
+                logadd("[!]", f'[{date}]', f'failed to import {syntax} from drive {letter}')
+                continue
+
+        for i in imports:
+            if line.startswith(i):
+                try:
+                    syntax = line
+                    syntax = syntax.replace("\n","")
+                    syntax = replacevars(syntax)
+                    syntaxsplit = syntax.split(".")
+                    importName = __import__(syntaxsplit[0])
+                    exec(f'{importName}.{syntaxsplit[1]}()')
+                    continue
+                except:
+                    logadd("[!]", f'[{date}]', f'failed to import {syntax} from drive {letter}')
+                    continue
 
 #part of loop code
 def createloop(letter, command, times):
