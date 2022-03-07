@@ -1,5 +1,6 @@
 driveBlackList = []
-allowLogClearing = True
-allowProgramExecution = True
-allowPython = True
 autoRemoveTempFiles = True
+allowLogClearing = True
+allowFileEditing = True
+allowProgramExecution = False
+allowPython = False
