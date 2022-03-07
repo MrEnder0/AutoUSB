@@ -3,8 +3,7 @@ import webbrowser, threading, random, time, os, sys
 
 today = date.today()
 date = today.strftime("%m/%d/%y")
-vars = {'autousb_version': '1.0.1', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'π': '3.1415926535', 'num_pi': '3.1415926535', 'num_e': '2.7182818284', 'num_inf': '9999999999999999999999999'}
-imports = {}; impc = 0
+vars = {'autousb_version': '1.0.2', 'autousb_release_type': 's', 'autousb_author': 'Team Codingo', 'date_today': today, 'π': '3.1415926535', 'num_pi': '3.1415926535', 'num_e': '2.7182818284', 'num_inf': '9999999999999999999999999'}
 
 #prepare the file
 def preinterpret(letter):
@@ -32,29 +31,30 @@ def interpret(letter, file):
                 syntax = line
                 syntax = syntax.replace("help", "")
                 syntax = syntax.replace("\n", "")
-                for command in syntaxsplit.split(" | "):
-                    if command == ";": print("To comment put ; at the begining of the line this can help orginize your autousb scripts code.")
-                    elif command == "comments": print("To comment put ; at the begining of the line this can help orginize your autousb scripts code.")
-                    elif command == "exit": print("To exit the interpreter type exit.")
-                    elif command == "loop": print("This i used to loop code in your programs to use put loop (times) then put || then your commands if multiple put | inbetween each one.")
-                    elif command == "if": print("This is used to check if a condition is true or false if it is put if (condition) then put || then your commands if multiple put | inbetween each one.")
-                    elif command == "setvar": print("This is used to set a variable to a value, to use put setvar (variable) (value), This can be used in almost any command that excepts arguments.")
-                    elif command == "delvar": print("This is used to delete a variable, to use put delvar (variable).")
-                    elif command == "wait": print("This is used to wait for a certain amount of time, to use put wait (time).")
-                    elif command == "run": print("This is used to run a programs, python, or other AutoUSB scripts, to use put run (program). Also if you want to run python put the word python before the python code.")
-                    elif command == "close": print("This is used to close a program, to use put close (program).")
-                    elif command == "log": print("This is used to log a message, to use put log (message). This is very helpful for debugging your scripts.")
-                    elif command == "logclear": print("This is a way to automatically clear logs so you dont have to.")
-                    elif command == "notify": print("This is used to send a notification to your desktop, to use put notify (message) | (time limit). Also if your using this command inside a statement or loop then use *timed instead of | .")
-                    elif command == "text": print("This is used to edit text documents on your pc, to use put text (action) (file) (text).")
-                    elif command == "search": print("This is used to search on your webbrowser.")
-                    elif command == "examples": print("If you would like some example scripts made check the storage folder inside the AutoUSB dir and open the examples folder this may help beginners learn how to use AutoUSB and some of its use cases.")
-                    elif command == "about": print(f'AutoUSB version {vars["autousb_version"]}AutoUSB release type {vars["autousb_release_type"]} by {vars["autousb_author"]}')
-                    elif command == "math": print("You can do basic math like + - * / % with the setvar command you also have access to pi and e. These 2 numbers can be used by using num_pi or num_e")
-                    else: print("Hmm looks like your not sure what you can put into this command. To help use any of these commands: ;, comments, exit, loop, if, setvar, delvar, wait, run, close, log, logclear, notify, text, search, examples. Hope this helps.")
+                if command == ";": print("To comment put ; at the begining of the line this can help orginize your autousb scripts code.")
+                elif command == "comments": print("To comment put ; at the begining of the line this can help orginize your autousb scripts code.")
+                elif command == "exit": print("To exit the interpreter type exit.")
+                elif command == "loop": print("This i used to loop code in your programs to use put loop (times) then put || then your commands if multiple put | inbetween each one.")
+                elif command == "if": print("This is used to check if a condition is true or false if it is put if (condition) then put || then your commands if multiple put | inbetween each one.")
+                elif command == "setvar": print("This is used to set a variable to a value, to use put setvar (variable) (value), This can be used in almost any command that excepts arguments.")
+                elif command == "delvar": print("This is used to delete a variable, to use put delvar (variable).")
+                elif command == "wait": print("This is used to wait for a certain amount of time, to use put wait (time).")
+                elif command == "run": print("This is used to run a programs, python, or other AutoUSB scripts, to use put run (program). Also if you want to run python put the word python before the python code.")
+                elif command == "close": print("This is used to close a program, to use put close (program).")
+                elif command == "log": print("This is used to log a message, to use put log (message). This is very helpful for debugging your scripts.")
+                elif command == "logclear": print("This is a way to automatically clear logs so you dont have to.")
+                elif command == "notify": print("This is used to send a notification to your desktop, to use put notify (message) | (time limit). Also if your using this command inside a statement or loop then use *timed instead of | .")
+                elif command == "text": print("This is used to edit text documents on your pc, to use put text (action) (file) (text).")
+                elif command == "search": print("This is used to search on your webbrowser.")
+                elif command == "math": print("You can do basic math like + - * / % with the setvar command you also have access to pi and e. These 2 numbers can be used by using num_pi or num_e")
+                elif command == "examples": print("If you would like some example scripts made check the storage folder inside the AutoUSB dir and open the examples folder this may help beginners learn how to use AutoUSB and some of its use cases.")
+                elif command == "about": print(f'AutoUSB version {vars["autousb_version"]}AutoUSB release type {vars["autousb_release_type"]} by {vars["autousb_author"]}')
+                elif command == "AutoUSB mk2": print(f'AutoUSB mk2 is the more optimized version of AutoUSB, it is the same as AutoUSB but with a lot of improvements and bug fixes. AutoUSB mk2 is not compatible with AutoUSB mk1. Also AutoUSB mk2 is made for sbc and not for pendrives/flashdrives.')
+                else: print("Hmm looks like your not sure what you can put into this command. To help use any of these commands: ;, comments, exit, loop, if, setvar, delvar, wait, run, close, log, logclear, notify, text, search, examples. Hope this helps.")
             except:
                 logadd("[!]", f'[{date}]', f'failed to help like that must really suck :/ {letter}')
                 pass
+
         if line.startswith("loop"):
             try:
                 syntax = line
@@ -70,7 +70,6 @@ def interpret(letter, file):
                     min = times[0]
                     max = times[1]
                     times = random.randint(int(min), int(max))
-
                 createloop(letter, command, times)
                 syntax = letter + ":\\autousbtemp\\" + "loop.autousb"
                 time.sleep(0.2)
@@ -255,6 +254,7 @@ def interpret(letter, file):
                     oldValue = value.split(" with ")[0]
                     newValue = value.split(" with ")[1]
                     vars[str(name)] = str(name.replace(oldValue, newValue))
+                    continue
                 else:
                     logadd("[!]", f'[{date}]', f'failed to set variable from drive {letter}')
                     continue
@@ -304,11 +304,16 @@ def interpret(letter, file):
                         syntax = syntax.strip(f'{letter}:\\')
                         syntax = syntax.replace("python ","")
                         exec(syntax)
+                    else:
+                        logadd("[!]", f'[{date}]', f'please enable allowPython in settings.py')
                     continue
+                    
                 else:
                     if allowProgramExecution == True:
                         os.startfile(syntax)
                         logadd("[#]", f'[{date}]', f'launched {syntax} from drive {letter}')
+                    else:
+                        logadd("[!]", f'[{date}]', f'please enable allowProgramExecution in settings.py')
                     continue
             except:
                 logadd("[!]", f'[{date}]', f'could not launch {syntax} from drive {letter}')
@@ -425,33 +430,6 @@ def interpret(letter, file):
             except:
                 logadd("[!]", f'[{date}]', f'failed to search {syntax} from drive {letter}')
                 continue
-        
-        if line.startswith("import"):
-            try:
-                syntax = line
-                syntax = syntax.replace("import ","")
-                syntax = syntax.replace("\n","")
-                syntax = replacevars(syntax)
-                imports[str(syntax)] = str(f'storage/packages/{syntax}')
-                print(imports)
-                continue
-            except:
-                logadd("[!]", f'[{date}]', f'failed to import {syntax} from drive {letter}')
-                continue
-
-        for i in imports:
-            if line.startswith(i):
-                try:
-                    syntax = line
-                    syntax = syntax.replace("\n","")
-                    syntax = replacevars(syntax)
-                    syntaxsplit = syntax.split(".")
-                    importName = __import__(syntaxsplit[0])
-                    exec(f'{importName}.{syntaxsplit[1]}()')
-                    continue
-                except:
-                    logadd("[!]", f'[{date}]', f'failed to import {syntax} from drive {letter}')
-                    continue
 
 #part of loop code
 def createloop(letter, command, times):
