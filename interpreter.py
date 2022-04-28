@@ -49,7 +49,8 @@ def interpret(letter, file):
                 elif command == "math": print("You can do basic math like + - * / % with the setvar command you also have access to pi and e. These 2 numbers can be used by using num_pi or num_e")
                 elif command == "examples": print("If you would like some example scripts made check the storage folder inside the AutoUSB dir and open the examples folder this may help beginners learn how to use AutoUSB and some of its use cases.")
                 elif command == "about": print(f'AutoUSB version {vars["autousb_version"]}AutoUSB release type {vars["autousb_release_type"]} by {vars["autousb_author"]}')
-                elif command == "AutoUSB mk2": print(f'AutoUSB mk2 is the more optimized version of AutoUSB, it is the same as AutoUSB but with a lot of improvements and bug fixes. AutoUSB mk2 is not compatible with AutoUSB mk1. Also AutoUSB mk2 is made for sbc and not for pendrives/flashdrives.')
+                elif command == "mk2": print("For information on AutoUSB MK2 please do help AutoUSB_mk2")
+                elif command == "AutoUSB_mk2": print(f'AutoUSB mk2 is the more optimized version of AutoUSB, it is the same as AutoUSB but with a lot of improvements and bug fixes. AutoUSB mk2 is not compatible with AutoUSB mk1. Also AutoUSB mk2 is made for sbc and not for pendrives/flashdrives.')
                 else: print("Hmm looks like your not sure what you can put into this command. To help use any of these commands: ;, comments, exit, loop, if, setvar, delvar, wait, run, close, log, logclear, notify, text, search, examples. Hope this helps.")
             except:
                 logadd("[!]", f'[{date}]', f'failed to help like that must really suck :/ {letter}')
